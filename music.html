@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="st">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Lotus Lane</h2>
+            <h3 id="artist">The Loyalist</h3>
+            <div class="img_container">
+                <img src="/images/img1.jpg" alt="">
+            </div>
+            <audio src="music/music1.mp3" ></audio>
+           
+        <!-- Music controls -->
+        <div class="music_controls">
+            <i class="fas f fa-backward" id="prev" title="Previous"></i>
+            <i class="fas f fa-play main_button" id="play" title="Play"></i>
+            <i class="fas fa-forward" id="next" title="Forward"></i>
+        </div>
+    </div>
+    </div>
+    <script>
+        const music =document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const nex = document.getElementById("next");
+        
+        let progress= document.getElementById("progress");
+        const songs=[
+            {
+                name: "music1",
+                title : "Gajab ka Hai Din",
+                artist: "Jubin Nautiyal",
+                img: "img2",
+            },
+            {
+                name: "music2",
+                title : "Gucci",
+                artist: "Aroob Khan",
+                img: "img1",
+            },
+            {
+                name: "music3",
+                title : "Maahiya",
+                artist: "Pav Dharia",
+                img: "img3",
+            }
+        ];
+
+
+        let isplaying =false;
+        const playy=()=>{
+            isplaying = true;
+            music.play();
+            play.classList.replace('fa-play','fa-pause');
+            img.classList.add("anime");
+            play.title = "Pause";
+        }
+
+        const pausee = ()=>{
+            isplaying = false;
+            music.pause();
+            play.classList.replace('fa-pause','fa-play');
+            img.classList.remove("anime");
+            play.title = "Play";
+        }
+        play.addEventListener('click',()=>{
+           if(isplaying){
+               pausee();
+           }
+           else{
+                playy();
+           }
+        });
+    //Changing music data
+    const loadSong = (songs) =>{
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+        music.src ="music/" + songs.name + ".mp3";
+        img.src = "images/" + songs.img + ".jpg";
+    };
+    loadSong(songs[0]);
+    let que = 0;
+   nex.addEventListener('click',()=>{
+        que = (que +1)%songs.length;
+    //    music.pause();
+       loadSong(songs[que]);
+       if(isplaying){
+       music.play();
+       play.classList.replace('fa-play','fa-pause');
+       play.title = "Pause";
+       }
+       else{
+           music.pause();
+           play.classList.replace('fa-pause','fa-play');
+           play.title = "Play";
+       }
+   })
+   prev.addEventListener('click',()=>{
+      que =(que-1 +songs.length) % songs.length;
+       loadSong(songs[que]);
+       if(isplaying){
+       music.play();
+       play.classList.replace('fa-play','fa-pause');
+       play.title = "Pause";
+       }
+       else{
+           music.pause();
+           play.classList.replace('fa-pause','fa-play');
+           play.title = "Play";
+       }
+   })
+    
+     
+    </script>
+</body>
+</html>
